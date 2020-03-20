@@ -1,0 +1,289 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.helloworld";
+option java_outer_classname = "HelloWorldProto";
+option objc_class_prefix = "HLW";
+
+package phuvo.customGrpc.helloworld;
+
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHello2 (HelloRequest2) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  rpc GetProductList(GetProductListRequest) returns (GetProductListResponse){}
+  rpc AddProduct(AddProductRequest) returns (AddProductResponse){}
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse){}
+  rpc ShowProduct(ShowProductRequest) returns (ShowProductResponse){}
+
+  rpc AddUser(AddUserRequest) returns (AddUserResponse){}
+  rpc GetUserList(GetUserListRequest) returns (GetUserListResponse){}
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse){}
+  rpc ShowUser(ShowUserRequest) returns (ShowUserResponse){}
+
+  rpc AddNpp(AddNppRequest) returns (AddNppResponse){}
+  rpc GetNppList(GetNppListRequest) returns (GetNppListResponse){}
+  rpc DeleteNpp(DeleteNppRequest) returns (DeleteNppResponse){}
+  rpc ShowNpp(ShowNppRequest) returns (ShowNppResponse){}
+  
+  rpc GetOrderList(GetOrderListRequest) returns (GetOrderListResponse){}
+  rpc AddOrder(AddOrderRequest) returns (AddOrderResponse){}
+  rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse){}
+
+  // Cập nhật đơn hàng
+  rpc UpdateOrderDetail(UpdateOrderDetailRequest) returns (UpdateOrderDetailResponse){}
+  rpc DeleteOrderDetail(DeleteOrderDetailRequest) returns (DeleteOrderDetailResponse){}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+  string age = 10;
+}
+message HelloRequest2 {
+  string name = 1;
+  string age = 10;
+}
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+
+
+message GetProductListRequest{
+}
+message GetProductListResponse{
+  string message = 1;
+  repeated Product products = 2;
+}
+message Product {
+  string id = 1;
+  string name = 2;
+  string price = 3;
+  string image = 4;
+}
+message FileUpload{
+  string name = 1;
+  string extension = 2;
+  bytes base64 = 3;
+}
+message AddProductRequest{
+  string id = 1;
+  string name = 2;
+  string price = 3;
+  FileUpload image = 4;
+
+  
+  
+}
+message AddProductResponse{
+  string id = 1;
+  string code = 2;
+  string message = 3;
+}
+
+// DELETE product
+message DeleteProductRequest{
+  string id = 1;
+}
+message DeleteProductResponse{
+  string id = 1;
+  string code = 2;
+  string message = 3;
+}
+// show 
+message ShowProductRequest{
+  string id = 1;
+}
+message ShowProductResponse{
+  string code = 1;
+  string message = 2;
+  string id = 3;
+  string name = 4;
+  string price = 5;
+}
+
+// quan ly user----------------------------------------------
+message AddUserRequest{
+  string id = 1;
+  string name = 2;
+  string age = 3;
+  string email = 4;
+  FileUpload image = 5;
+}
+message AddUserResponse{
+  string code = 1;
+  string message = 2;
+  string id = 3;
+}
+message GetUserListRequest{
+}
+message GetUserListResponse{
+  string code = 1;
+  string message = 2;
+}
+// DELETE user
+message DeleteUserRequest{
+  string id = 1;
+}
+message DeleteUserResponse{
+  string id = 1;
+  string code = 2;
+  string message = 3;
+}
+message ShowUserRequest{
+  string id = 1;
+}
+message ShowUserResponse{
+  string code = 1;
+  string message = 2;
+  string id = 3;
+  string name = 4;
+  string age = 5;
+  string email = 6;
+}
+// quan ly NPP ----------------------------------------------
+message AddNppRequest{
+  string id = 1;
+  string name = 2;
+  string age = 3;
+  string email = 4;
+  FileUpload image = 5;
+}
+message AddNppResponse{
+  string code = 1;
+  string message = 2;
+  string id = 3;
+}
+message GetNppListRequest{
+}
+message GetNppListResponse{
+  string code = 1;
+  string message = 2;
+}
+// DELETE user
+message DeleteNppRequest{
+  string id = 1;
+}
+message DeleteNppResponse{
+  string id = 1;
+  string code = 2;
+  string message = 3;
+}
+
+message ShowNppRequest{
+  string id = 1;
+}
+message ShowNppResponse{
+  string code = 1;
+  string message = 2;
+  string id = 3;
+  string name = 4;
+  string age = 5;
+  string email = 6;
+}
+
+message OrderDetail{
+    int32 id = 1;
+    Product product =2;
+    int32 quantity = 3;
+    int32 total_price = 4;
+    int32 order_id = 5;
+
+}
+message User{
+    int32 id = 1;
+    string name = 2;
+    int32 age = 3;
+    string email = 4;
+}
+message Order{
+	int32 id = 1;
+	string note = 2;
+	int32  status = 3;
+	string address = 4;
+	string phone = 5;
+	User user = 6;
+	int32 total_price = 7;
+	repeated OrderDetail orderDetail = 8;
+}
+
+message GetOrderListRequest{
+
+}
+message GetOrderListResponse{
+	int32 code = 1;
+	string message = 2;
+	repeated Order order = 3;
+}
+message AddOrderDetailInfo{
+  int32 productId = 1;
+  int32 quantity = 2;
+}
+message AddOrderInfo{
+  repeated AddOrderDetailInfo addOrderDetailInfo = 1;
+	string note = 2;
+	int32  status = 3;
+	string address = 4;
+	string phone = 5;
+	int32 userId = 6;
+	int32 total_price = 7;
+}
+message AddOrderRequest{
+  AddOrderInfo addOrderInfo = 1;
+}
+message AddOrderResponse{
+  int32 id = 1;
+  int32 code = 2;
+	string message = 3;
+}
+
+message DeleteOrderRequest{
+  int32 order_id = 1;
+}
+
+message DeleteOrderResponse{
+  int32 order_id = 1;
+  int32 code = 2;
+	string message = 3;
+}
+
+// Cập nhật đơn hàng
+// Cập nhật chi tiết đơn hàng
+message UpdateOrderDetailRequest{
+  int32 id = 1;
+  int32 product_id = 2;
+  int32 quantity = 3;
+}
+
+message UpdateOrderDetailResponse{
+  int32 id = 1;
+  int32 code = 2;
+	string message = 3;
+}
+// Hủy chi tiết đơn hàng
+message DeleteOrderDetailRequest{
+  int32 id = 1;
+}
+
+message DeleteOrderDetailResponse{
+  int32 id = 1;
+  int32 code = 2;
+	string message = 3;
+}
