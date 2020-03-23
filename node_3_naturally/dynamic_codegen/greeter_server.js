@@ -16,11 +16,9 @@
  *
  */
 
-var PROTO_PATH = __dirname + '/../../protos_naturally/naturally.proto';
+var PROTO_PATH = __dirname + '/../../protos/helloworld.proto';
 
 var grpc = require('grpc');
-
-
 var protoLoader = require('@grpc/proto-loader');
 var packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
@@ -30,20 +28,34 @@ var packageDefinition = protoLoader.loadSync(
      defaults: true,
      oneofs: true
     });
-var naturally_proto = grpc.loadPackageDefinition(packageDefinition).grpcApi;
-var user_proto = grpc.loadPackageDefinition(packageDefinition).users;
-// console.log(grpc.loadPackageDefinition(packageDefinition));
+var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+//knex kết nối
+const {user_obj} = require('./model_module/module_user');
+const {greeter_controller} = require('./controller_module/greeter_controller');
+const jwt = require('jsonwebtoken');
+const {APP_KEY} = require('./constant/app_const');
+var login_data = {username:"phuvo",passowrd:"123456"};
+user_obj.generateToken(login_data).then((token)=>{
+  
+});
+
+
+
+/**
+ * Implements the SayHello RPC method.
+ */
+// function sayHello(call, callback) {
+//   callback(null, {message: 'Hello ' + call.request.name});
+// }
+
 /**
  * Starts an RPC server that receives requests for the Greeter service at the
  * sample server port
  */
-const {login_controller} = require('./controller_module/login_controller');
-const {user_controller} = require('./controller_module/user_controller');
 function main() {
   var server = new grpc.Server();
-  server.addService(naturally_proto.NaturallyApi.service, login_controller);
-  server.addService(user_proto.UserService.service, user_controller);
-  server.bind('0.0.0.0:50052', grpc.ServerCredentials.createInsecure());
+  server.addService(hello_proto.Greeter.service, greeter_controller);
+  server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
   server.start();
 }
 

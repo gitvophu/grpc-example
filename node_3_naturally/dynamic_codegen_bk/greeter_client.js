@@ -16,11 +16,9 @@
  *
  */
 
-var PROTO_PATH = __dirname + '/../../protos_naturally/naturally.proto';
+var PROTO_PATH = __dirname + '/../../protos/helloworld.proto';
 
 var grpc = require('grpc');
-
-
 var protoLoader = require('@grpc/proto-loader');
 var packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
@@ -30,21 +28,20 @@ var packageDefinition = protoLoader.loadSync(
      defaults: true,
      oneofs: true
     });
-var naturally_proto = grpc.loadPackageDefinition(packageDefinition).grpcApi;
-var user_proto = grpc.loadPackageDefinition(packageDefinition).users;
-// console.log(grpc.loadPackageDefinition(packageDefinition));
-/**
- * Starts an RPC server that receives requests for the Greeter service at the
- * sample server port
- */
-const {login_controller} = require('./controller_module/login_controller');
-const {user_controller} = require('./controller_module/user_controller');
+var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+
 function main() {
-  var server = new grpc.Server();
-  server.addService(naturally_proto.NaturallyApi.service, login_controller);
-  server.addService(user_proto.UserService.service, user_controller);
-  server.bind('0.0.0.0:50052', grpc.ServerCredentials.createInsecure());
-  server.start();
+  var client = new hello_proto.Greeter('localhost:50051',
+                                       grpc.credentials.createInsecure());
+  var user;
+  if (process.argv.length >= 3) {
+    user = process.argv[2];
+  } else {
+    user = 'world';
+  }
+  client.sayHello({name: user}, function(err, response) {
+    console.log('Greeting:', response.message);
+  });
 }
 
 main();
