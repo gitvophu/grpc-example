@@ -11,6 +11,15 @@ const Dc = function(){
             });
         })
     }
+
+    this.getAll = function(){
+        return new Promise((resolve,reject)=>{
+            knex.select("*").from('dcs').then((dcs)=>{
+                resolve(dcs);
+            })    
+        })
+        
+    }
     
 
 }

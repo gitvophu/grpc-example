@@ -30,8 +30,9 @@ var packageDefinition = protoLoader.loadSync(
      defaults: true,
      oneofs: true
     });
-var naturally_proto = grpc.loadPackageDefinition(packageDefinition).grpcApi;
-var user_proto = grpc.loadPackageDefinition(packageDefinition).users;
+var auth_proto = grpc.loadPackageDefinition(packageDefinition).NaturallyGrpc.Auth ;
+var user_proto = grpc.loadPackageDefinition(packageDefinition).NaturallyGrpc.Users;
+
 // console.log(grpc.loadPackageDefinition(packageDefinition));
 /**
  * Starts an RPC server that receives requests for the Greeter service at the
@@ -41,8 +42,10 @@ const {login_controller} = require('./controller_module/login_controller');
 const {user_controller} = require('./controller_module/user_controller');
 function main() {
   var server = new grpc.Server();
-  server.addService(naturally_proto.NaturallyApi.service, login_controller);
+  server.addService(auth_proto.AuthService.service, login_controller);
   server.addService(user_proto.UserService.service, user_controller);
+  
+  
   server.bind('0.0.0.0:50052', grpc.ServerCredentials.createInsecure());
   server.start();
 }

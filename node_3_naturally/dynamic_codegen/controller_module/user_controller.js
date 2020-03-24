@@ -23,6 +23,10 @@ const user_controller = {
                 access_info = p_access_info;
                 return resolve();
             }).catch((error)=>{
+                console.log(error);
+                if(error.name == "TokenExpiredError"){
+                    reject( ERROR_OBJ.ERR_EXPIRIED_TOKEN);
+                }
                 return reject( ERROR_OBJ.ERR_ACCESS_TOKEN_NOT_VALID);
             })
             
@@ -37,7 +41,8 @@ const user_controller = {
                 catch(e){
                     return reject(ERROR_OBJ.ERR_PARSE_JSON);
                 }
-                if(permission['user'] && permission['user'].includes("aasdasd") ){
+                
+                if(permission['user'] && permission['user'].includes("View") ){
                     user_obj.getUserList().then((p_users)=>{
                         users = p_users;
                         return resolve();
