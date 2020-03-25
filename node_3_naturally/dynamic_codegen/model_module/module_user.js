@@ -72,6 +72,14 @@ const User = function(){
             })
         })
     }
+    this.findUser = function(user_id = 0){
+        return new Promise(()=>{
+            knex.select().where('id','=',user_id).first().then((user)=>{
+                resolve(user);
+            });
+
+        })
+    }
     
 
 }

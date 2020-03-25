@@ -14,14 +14,14 @@ class Naturally
         if (static::$is_initialized == true) {
           return;
         }
-        \GPBMetadata\Login::initOnce();
+        \GPBMetadata\Auth::initOnce();
+        \GPBMetadata\Users::initOnce();
+        \GPBMetadata\Dcs::initOnce();
         $pool->internalAddGeneratedFile(hex2bin(
-            "0ab0010a0f6e61747572616c6c792e70726f746f12076772706341706932" .
-            "540a0c4e61747572616c6c7941706912440a054c6f67696e121b2e677270" .
-            "634170692e6c6f67696e2e4c6f67696e526571756573741a1c2e67727063" .
-            "4170692e6c6f67696e2e4c6f67696e526573706f6e7365220042360a1b69" .
-            "6f2e677270632e6578616d706c65732e68656c6c6f776f726c64420f4865" .
-            "6c6c6f576f726c6450726f746f5001a20203484c57620670726f746f33"
+            "0a690a0f6e61747572616c6c792e70726f746f1a0b75736572732e70726f" .
+            "746f1a096463732e70726f746f42360a1b696f2e677270632e6578616d70" .
+            "6c65732e68656c6c6f776f726c64420f48656c6c6f576f726c6450726f74" .
+            "6f5001a20203484c57620670726f746f33"
         ), true);
 
         static::$is_initialized = true;

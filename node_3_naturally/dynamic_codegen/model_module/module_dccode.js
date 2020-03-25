@@ -20,6 +20,13 @@ const Dc = function(){
         })
         
     }
+    this.getBranchMaster = function(){
+        return new Promise((resolve,reject)=>{
+            knex.select().from('dcs').where('Type','=',1).first().then((dc)=>{
+                resolve(dc);
+            });
+        })
+    }
     
 
 }

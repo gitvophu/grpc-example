@@ -13,19 +13,24 @@
 // limitations under the License.
 
 syntax = "proto3";
-import "auth.proto";
-import "users.proto";
-import "dcs.proto";
-import "distributors.proto";
 option java_multiple_files = true;
 option java_package = "io.grpc.examples.helloworld";
 option java_outer_classname = "HelloWorldProto";
 option objc_class_prefix = "HLW";
 
-// package grpcApi;
+package NaturallyGrpc.Distributors;
 // The greeting service definition.
-// service NaturallyApi {
-//   	// Sends a greeting
-// 	  rpc Login(grpcApi.login.LoginRequest) returns (grpcApi.login.LoginResponse){}
-// }
-// The request message containing the user's name.
+service DistributorService {
+  	// Sends a greeting
+      rpc GetDistributorByFLPNo(GetDistributorByFLPNoRequest) returns (GetDistributorByFLPNoResponse){}
+}
+message GetDistributorByFLPNoRequest {
+    string FLPNo = 1;
+}
+
+message GetDistributorByFLPNoResponse {
+    int32 code = 1;
+    string message = 2;
+    string distributor = 3;
+}
+
