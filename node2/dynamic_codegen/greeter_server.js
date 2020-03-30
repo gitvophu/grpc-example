@@ -22,7 +22,7 @@ var grpc = require('grpc');
 //node-mysql
 var mysql = require('mysql');
 var con = mysql.createConnection({
-  host: "192.168.1.111",
+  host: "localhost",
   user: "sa",
   password: "qwerty!@#",
   database: "test_db"
